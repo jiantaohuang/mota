@@ -3,17 +3,19 @@
 ////////////////////////////
 class GameMap{
 	constructor(storeyNum){
-		this.storey = StoreyAttr[`storey${storeyNum}`] || [];
+		this.dom = config.area;  
+		this.initLocation = {};  //英雄初始位置
+		this.storeyNum = storeyNum;   //当前楼层
+		this.storey = StoreyAttr[`storey${storeyNum}`] || []; 
 		this.storeyList = new Map();
 		this.storeyCreepList = new Map();
 		this.storeyItemList = new Map();
+		this.storeyOtherList = new Map();
 		this.creepsMap = new Map();
 		this.itemsMap = new Map();
+		this.otherMap = new Map();
 		if(this.storey){
-			this.storeyList.set(`storey${storeyNum}`,this.storey);
-			this.storeyCreepList.set(`storeyCreep${storeyNum}`,this.storeyCreep);
-			this.storeyItemList.set(`storeyItem${storeyNum}`,this.storeyItem);
-			this.draw();
+			this.setStorey(storeyNum);
 		}
 	}
 	/////////////////////////
@@ -31,8 +33,12 @@ class GameMap{
 		}
 		return action;
 	}
-	setStorey(storey){
-		
+	setStorey(storeyNum){
+		this.storeyList.set(`storey${storeyNum}`,this.storey);
+		this.storeyCreepList.set(`storeyCreep${storeyNum}`,this.storeyCreep);
+		this.storeyItemList.set(`storeyItem${storeyNum}`,this.storeyItem);
+		this.storeyOtherList.set(`storeyOther${storeyNum}`,this.otherMap);
+		this.draw();
 	}
 	getCreep(row,col){
 		return this.creepsMap.get(`${row}-${col}`);
@@ -50,12 +56,32 @@ class GameMap{
 		this.storey[row][col] = 0;
 		return this.itemsMap.delete(`${row}-${col}`);
 	}
+	setStairway(type,callback){
+		let result = 0;       //记录上下楼 数量
+ 		let curStoreyNum = this.storeyNum;
+		if(type === 'Up'){
+			curStoreyNum += 1;
+		}else if(type === 'Dn'){
+			curStoreyNum -= 1;
+		}
+
+		let storey = StoreyAttr[`storey${curStoreyNum}`];
+		if(storey){
+			result = curStoreyNum - this.storeyNum;
+			this.storeyNum = curStoreyNum;
+			this.storey = storey;
+			this.setStorey(curStoreyNum);
+			if(callback && typeof(callback) === 'function') callback.call(null,result);
+		}
+	}
 	draw(){
 		this.redraw();
 		
 		this.storey.map((line,row) => {
 			line.map((value,col) => {
 				let block = document.createElement('div');
+				if(value === 9998) this.initLocation.dn = {row:row,col:col};
+				if(value === 9999) this.initLocation.up = {row:row,col:col};
 				if(value < 100){
 					block.className = `block block${value}`;   
 				}else{
@@ -64,11 +90,17 @@ class GameMap{
 						this.drawCreep(row,col,Storey.StoreyEnum(value));
 					}else if(value < 300){
 						this.drawItem(row,col,Storey.StoreyEnum(value));
+					}else if(value <400){
+
+					}else if(value < 402){
+						let type = Storey.StoreyEnum(value);
+						let stairway = new Stairway(row,col,type);
+						this.otherMap.set(`${row}-${col}`,stairway);
 					}
 				}
 				block.style.top = row * config.unitSize +'px';
 				block.style.left = col * config.unitSize +'px';
-				config.area.appendChild(block);
+				this.dom.appendChild(block);
 			})
 		})
 	}
@@ -80,27 +112,9 @@ class GameMap{
 		let m = new Creep(row,col,type);
 		this.creepsMap.set(`${row}-${col}`,m);
 	}
-	drawScoreboard(options){
-		//画计分板
-		let sb = document.querySelector('.scoreboard');
-		for(let opt in options){
-			let temp = sb.querySelector(`.${opt}`);
-			if(temp){
-				if(typeof(options[opt]) !== 'object'){
-					temp.innerText = options[opt];
-				}else{
-					for(let key in options[opt]){
-						temp = sb.querySelector(`.${key}`);
-						if(temp){
-							temp.innerText = options[opt][key];
-						}
-					}
-				}
-			}
-		}
-	}
+	
 	redraw(){
-
+		this.dom.innerHTML = '';
 	}
 }
 

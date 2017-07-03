@@ -1,6 +1,7 @@
 *{margin: 0;padding: 0;}
+.box{position: relative;}
 .area{width: 418px;height: 418px;margin: 100px auto 0;position: relative;background-size:100% 100%;}
-.scoreboard{position: absolute;top: 0;right: -180px;}
+.scoreboard{position: absolute;top: 0;right: 30px;}
 .scoreboard>div{margin-top: 10px;}
 .scoreboard em{display: inline-block;width: 80px;text-align: left;}
 .scoreboard span{display: inline-block;width: 80px;text-align: center;}
@@ -26,3 +27,7 @@
 .keys.red{background: url(../images/bg/red.jpg) no-repeat;z-index: 1;}
 
 .door.yellow{background: url(../images/bg/yellow-door.jpg) no-repeat;z-index: 1;}
+
+.stairway{width: 32px;height: 32px;position: absolute;}
+.stairwayUp{background: url(../images/bg/up.jpg) no-repeat;z-index: 1;}
+.stairwayDn{background: url(../images/bg/dn.jpg) no-repeat;z-index: 1;}

@@ -8,7 +8,7 @@ class BaseEntity{
 		this.option = Object.assign({},option);
 		this.draw();
 	}
-	draw(){
+	draw(area){
 		let areaDom = config.area;
 		let entityDom = this.dom;
 		if(!entityDom){
@@ -51,13 +51,17 @@ class Hero extends BaseEntity{
 		};
 		super(x,y,option);
 	}
-	draw(){
+	draw(){		
 		super.draw();
 	}
 	move(x,y){
 		this.xLocation += x;
 		this.yLocation += y;
 		this.draw();
+	}
+	setLocation(location){
+		this.xLocation = location.row;
+		this.yLocation = location.col;
 	}
 	attack(creep,callback){
 		let result;
@@ -112,6 +116,7 @@ class Hero extends BaseEntity{
 		if(callback && typeof(callback) === 'function') callback.call(null,result);
 		return result;
 	}
+
 }
 
 ////////////////////////////
@@ -151,7 +156,7 @@ class Stairway extends BaseEntity{
 		//up 上楼 dn 下楼
 		let option = {
 			type:type,
-			className:`stairway${type}`
+			className:`stairway stairway${type}`
 		}
 		super(x,y,option);
 	}
