@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js版魔塔demo</title>
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+	<div class="area">
+		<div class="scoreboard">
+			<div><em>等级：</em><span class="level"></span></div>
+			<div><em>生命：</em><span class="hp"></span></div>
+			<div><em>攻击：</em><span class="attack"></span></div>
+			<div><em>防御：</em><span class="defense"></span></div>
+			<div><em>金币：</em><span class="gold"></span></div>
+			<div><em>经验：</em><span class="exp"></span></div>
+			<br />
+			<div class="key">
+				<div><em>黄钥匙</em><span class="yellow"></span></div>
+				<div><em>蓝钥匙</em><span class="blue"></span></div>
+				<div><em>红钥匙</em><span class="red"></span></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script type="text/javascript" src="js/config.js"></script>
+<script type="text/javascript" src="js/engine.js"></script>
+<script type="text/javascript" src="js/storey.js"></script>
+<script type="text/javascript" src="js/map.js"></script>
+<script type="text/javascript" src="js/entity.js"></script>
+<script type="text/javascript">
+
+
+let map = new GameMap(1);
+let hero = new Hero();
+let engine = new Engine(hero,map);
+
+document.onkeydown = event => {
+	let e = event || window.event || arguments.callee.caller.arguments[0];
+	switch(e.keyCode){
+		case 37:engine.left();break;
+		case 38:engine.up();break;
+		case 39:engine.right();break;
+		case 40:engine.down();break;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+</script>

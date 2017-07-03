@@ -1,0 +1,28 @@
+*{margin: 0;padding: 0;}
+.area{width: 418px;height: 418px;margin: 100px auto 0;position: relative;background-size:100% 100%;}
+.scoreboard{position: absolute;top: 0;right: -180px;}
+.scoreboard>div{margin-top: 10px;}
+.scoreboard em{display: inline-block;width: 80px;text-align: left;}
+.scoreboard span{display: inline-block;width: 80px;text-align: center;}
+
+.block{width:32px;height: 32px;position: absolute;}
+.block0{background: url('../images/Boutique/Tilesets/01.png') no-repeat;background-position: -96px -32px;}
+.block1{background: url('../images/Boutique/Tilesets/01.png') no-repeat;background-position: -192px 0;display: inline-block;}
+
+.hero{background: url('../images/walk/Monster-03.png') no-repeat;
+		width:30px;height:30px;background-position: 0px 0px;display: inline-block;
+		position: absolute;top: 0;left: 0;z-index: 2;
+}
+
+
+.samll{width:32px;height: 32px;z-index: 2;position: absolute;display: inline-block;}
+.greenSlime{background: url('../images/Boutique/Battlers/Slime-05-01.png') no-repeat;}
+
+
+
+.keys,.door{width: 32px;height: 32px;position: absolute;}
+.keys.yellow{background: url(../images/bg/yellow.jpg) no-repeat;z-index: 1;}
+.keys.blue{background: url(../images/bg/blue.jpg) no-repeat;z-index: 1;}
+.keys.red{background: url(../images/bg/red.jpg) no-repeat;z-index: 1;}
+
+.door.yellow{background: url(../images/bg/yellow-door.jpg) no-repeat;z-index: 1;}
